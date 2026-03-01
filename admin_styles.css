@@ -10,7 +10,7 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar */
+/* Sidebar.*/
 .sidebar {
     position: fixed;
     left: 0;
@@ -434,3 +434,4 @@ select.btn:hover {
         padding: 12px 10px;
     }
 }
+
