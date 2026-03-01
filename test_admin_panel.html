@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Admin Panel</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .test-box { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        button { padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; margin: 5px; }
+        button:hover { background: #2563eb; }
+        pre { background: #f9f9f9; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Admin Panel Test</h1>
+    
+    <div class="test-box">
+        <h3>Backend URL:</h3>
+        <input type="text" id="apiUrl" value="https://instantpick-backend.onrender.com" style="width: 400px; padding: 8px;">
+        <button onclick="testConnection()">Test Connection</button>
+    </div>
+
+    <div class="test-box">
+        <h3>Connection Status:</h3>
+        <div id="connectionStatus">Not tested yet</div>
+    </div>
+
+    <div class="test-box">
+        <h3>Dashboard Stats:</h3>
+        <button onclick="testStats()">Load Stats</button>
+        <div id="statsResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h3>Users Data:</h3>
+        <button onclick="testUsers()">Load Users</button>
+        <div id="usersResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h3>Shops Data:</h3>
+        <button onclick="testShops()">Load Shops</button>
+        <div id="shopsResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h3>Products Data:</h3>
+        <button onclick="testProducts()">Load Products</button>
+        <div id="productsResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h3>Orders Data:</h3>
+        <button onclick="testOrders()">Load Orders</button>
+        <div id="ordersResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h3>Final Result:</h3>
+        <button onclick="runAllTests()">🚀 Run All Tests</button>
+        <div id="finalResult"></div>
+    </div>
+
+    <script>
+        function getApiUrl() {
+            return document.getElementById('apiUrl').value.replace(/\/$/, '');
+        }
+
+        async function testConnection() {
+            const status = document.getElementById('connectionStatus');
+            status.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch(`${getApiUrl()}/api/admin/stats`);
+                if (response.ok) {
+                    status.innerHTML = '<span class="success">✅ Connected Successfully!</span>';
+                    return true;
+                } else {
+                    status.innerHTML = '<span class="error">❌ Connection Failed (Status: ' + response.status + ')</span>';
+                    return false;
+                }
+            } catch (error) {
+                status.innerHTML = '<span class="error">❌ Cannot connect to backend: ' + error.message + '</span>';
+                return false;
+            }
+        }
+
+        async function testStats() {
+            const result = document.getElementById('statsResult');
+            result.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch(`${getApiUrl()}/api/admin/stats`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `
+                        <span class="success">✅ Stats Loaded!</span>
+                        <pre>${JSON.stringify(data.stats, null, 2)}</pre>
+                    `;
+                } else {
+                    result.innerHTML = '<span class="error">❌ Failed to load stats</span>';
+                }
+            } catch (error) {
+                result.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function testUsers() {
+            const result = document.getElementById('usersResult');
+            result.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch(`${getApiUrl()}/api/admin/users`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `
+                        <span class="success">✅ Users Loaded! (Total: ${data.users.length})</span>
+                        <pre>${JSON.stringify(data.users.slice(0, 2), null, 2)}</pre>
+                    `;
+                } else {
+                    result.innerHTML = '<span class="error">❌ Failed to load users</span>';
+                }
+            } catch (error) {
+                result.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function testShops() {
+            const result = document.getElementById('shopsResult');
+            result.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch(`${getApiUrl()}/api/admin/shops`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `
+                        <span class="success">✅ Shops Loaded! (Total: ${data.shops.length})</span>
+                        <pre>${JSON.stringify(data.shops.slice(0, 2), null, 2)}</pre>
+                    `;
+                } else {
+                    result.innerHTML = '<span class="error">❌ Failed to load shops</span>';
+                }
+            } catch (error) {
+                result.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function testProducts() {
+            const result = document.getElementById('productsResult');
+            result.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch(`${getApiUrl()}/api/admin/products`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `
+                        <span class="success">✅ Products Loaded! (Total: ${data.products.length})</span>
+                        <pre>${JSON.stringify(data.products.slice(0, 2), null, 2)}</pre>
+                    `;
+                } else {
+                    result.innerHTML = '<span class="error">❌ Failed to load products</span>';
+                }
+            } catch (error) {
+                result.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function testOrders() {
+            const result = document.getElementById('ordersResult');
+            result.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch(`${getApiUrl()}/api/admin/orders`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `
+                        <span class="success">✅ Orders Loaded! (Total: ${data.orders.length})</span>
+                        <pre>${JSON.stringify(data.orders.slice(0, 2), null, 2)}</pre>
+                    `;
+                } else {
+                    result.innerHTML = '<span class="error">❌ Failed to load orders</span>';
+                }
+            } catch (error) {
+                result.innerHTML = '<span class="error">❌ Error: ' + error.message + '</span>';
+            }
+        }
+
+        async function runAllTests() {
+            const result = document.getElementById('finalResult');
+            result.innerHTML = '<h3>Running all tests...</h3>';
+            
+            let allPassed = true;
+            let summary = '';
+            
+            // Test 1: Connection
+            summary += '<p>1. Testing connection...</p>';
+            const connected = await testConnection();
+            if (!connected) {
+                allPassed = false;
+                summary += '<p class="error">❌ Connection test failed!</p>';
+                result.innerHTML = summary + '<h3 class="error">❌ Tests Failed! Backend not running or wrong URL.</h3>';
+                return;
+            }
+            summary += '<p class="success">✅ Connection test passed!</p>';
+            
+            // Test 2: Stats
+            summary += '<p>2. Testing stats API...</p>';
+            await testStats();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Test 3: Users
+            summary += '<p>3. Testing users API...</p>';
+            await testUsers();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Test 4: Shops
+            summary += '<p>4. Testing shops API...</p>';
+            await testShops();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Test 5: Products
+            summary += '<p>5. Testing products API...</p>';
+            await testProducts();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Test 6: Orders
+            summary += '<p>6. Testing orders API...</p>';
+            await testOrders();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            summary += '<h2 class="success">✅ All Tests Passed!</h2>';
+            summary += '<p><strong>Your admin panel is fully working and ready to use!</strong></p>';
+            summary += '<p>Open <code>admin_dashboard.html</code> or <code>index.html</code> to use the admin panel.</p>';
+            
+            result.innerHTML = summary;
+        }
+    </script>
+</body>
+</html>

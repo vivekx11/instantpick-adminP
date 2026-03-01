@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Production Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin_styles.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>🎯 Admin Panel</h1>
+            <p>Production Dashboard</p>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-item active" onclick="showSection('dashboard')">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" onclick="showSection('users')">
+                <span class="nav-icon">👥</span>
+                <span>Users</span>
+            </div>
+            <div class="nav-item" onclick="showSection('shops')">
+                <span class="nav-icon">🏪</span>
+                <span>Shops</span>
+            </div>
+            <div class="nav-item" onclick="showSection('products')">
+                <span class="nav-icon">📦</span>
+                <span>Products</span>
+            </div>
+            <div class="nav-item" onclick="showSection('orders')">
+                <span class="nav-icon">🛒</span>
+                <span>Orders</span>
+            </div>
+            <div class="nav-item" onclick="showSection('logs')">
+                <span class="nav-icon">📋</span>
+                <span>Activity Logs</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="search-bar">
+                <input type="text" id="apiUrl" class="api-url-input" placeholder="Backend URL" value="https://instantpick-backend.onrender.com">
+                <button class="btn-primary" onclick="loadDashboard()">🔄 Refresh</button>
+            </div>
+            <div class="user-info">
+                <span id="lastUpdate">Last updated: Never</span>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="section active">
+                <h2 class="section-title">Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>Total Users</h3>
+                            <p class="stat-number" id="totalUsers">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon">🏪</div>
+                        <div class="stat-info">
+                            <h3>Total Shops</h3>
+                            <p class="stat-number" id="totalShops">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-info">
+                            <h3>Total Products</h3>
+                            <p class="stat-number" id="totalProducts">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-icon">🛒</div>
+                        <div class="stat-info">
+                            <h3>Total Orders</h3>
+                            <p class="stat-number" id="totalOrders">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card teal">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>Active Shops</h3>
+                            <p class="stat-number" id="activeShops">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card red">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-info">
+                            <h3>Pending Orders</h3>
+                            <p class="stat-number" id="pendingOrders">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users" class="section">
+                <h2 class="section-title">Users Management</h2>
+                <div class="table-container">
+                    <div id="usersContent" class="loading">Loading users...</div>
+                </div>
+            </div>
+
+            <!-- Shops Section -->
+            <div id="shops" class="section">
+                <h2 class="section-title">Shops Management</h2>
+                <div class="table-container">
+                    <div id="shopsContent" class="loading">Loading shops...</div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div id="products" class="section">
+                <h2 class="section-title">Products Management</h2>
+                <div class="table-container">
+                    <div id="productsContent" class="loading">Loading products...</div>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="orders" class="section">
+                <h2 class="section-title">Orders Management</h2>
+                <div class="table-container">
+                    <div id="ordersContent" class="loading">Loading orders...</div>
+                </div>
+            </div>
+
+            <!-- Logs Section -->
+            <div id="logs" class="section">
+                <h2 class="section-title">Activity Logs</h2>
+                <div class="table-container">
+                    <div id="logsContent" class="loading">Loading logs...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin_script.js"></script>
+</body>
+</html>
