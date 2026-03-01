@@ -1,6 +1,6 @@
 let API_BASE_URL = 'https://instantpick-backend.onrender.com';
 
-// Update API URL
+// Update API URL.
 document.getElementById('apiUrl').addEventListener('change', (e) => {
     API_BASE_URL = e.target.value.replace(/\/$/, '');
     localStorage.setItem('apiUrl', API_BASE_URL);
@@ -441,3 +441,4 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
