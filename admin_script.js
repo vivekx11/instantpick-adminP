@@ -7,7 +7,7 @@ document.getElementById('apiUrl').addEventListener('change', (e) => {
     loadDashboard();
 });
 
-// Load saved API URL
+// Load saved API URL.
 window.onload = () => {
     const savedUrl = localStorage.getItem('apiUrl');
     if (savedUrl) {
@@ -441,4 +441,5 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
 
