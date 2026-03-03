@@ -1,1 +1,1 @@
-# instantpick-adminP.
+# instantpick-adminP
